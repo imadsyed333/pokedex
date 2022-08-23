@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: "stretch",
     alignContent: "space-around",
-    paddingTop: 10,
     paddingHorizontal: 5,
     borderRadius: 10,
   },

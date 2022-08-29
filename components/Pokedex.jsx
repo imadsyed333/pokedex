@@ -7,12 +7,28 @@ import {
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import Pokemon from "./Pokemon";
+import { Pokemon } from "./Pokemon";
 
-export default function Pokedex() {
+export default function Pokedex(props) {
   const [pokemon, setPokemon] = useState([]);
   const [tempPokemon, setTempPokemon] = useState([]);
   const [query, setQuery] = useState("");
+
+  const getPokemon = async () => {
+    const tempList = [];
+
+    const pokedexResponse = await fetch(
+      "https://pokeapi.co/api/v2/pokemon?limit=100&offset=0"
+    );
+    const pokedexJson = await pokedexResponse.json();
+    const results = pokedexJson.results;
+    for (let i = 0; i < results.length; i++) {
+      const pokemonResponse = await fetch(results[i].url);
+      const pokemonJson = await pokemonResponse.json();
+      tempList.push(pokemonJson);
+    }
+    setPokemon(tempList);
+  };
 
   useEffect(() => {
     getPokemon();
@@ -24,20 +40,8 @@ export default function Pokedex() {
         return a.name.toLowerCase().startsWith(query.toLowerCase());
       })
     );
-  }, [query, pokemon]);
+  }, [pokemon, query]);
 
-  const getPokemon = () => {
-    const url = "https://pokeapi.co/api/v2/pokemon?limit=10&offset=0";
-    fetch(url)
-      .then((response) => response.json())
-      .then((json) => {
-        setPokemon(json.results);
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("Cannot fetch Pokemon");
-      });
-  };
   return (
     <View style={styles.container}>
       <TextInput
@@ -49,7 +53,14 @@ export default function Pokedex() {
       <FlatList
         style={styles.container}
         data={tempPokemon}
-        renderItem={({ item }) => <Pokemon name={item.name} />}
+        renderItem={({ item }) => (
+          <Pokemon
+            name={item.name}
+            sprite={item.sprites.front_default}
+            art={item.sprites.other["official-artwork"].front_default}
+            navigation={props.navigation}
+          />
+        )}
       />
     </View>
   );
@@ -67,8 +78,9 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 15,
     paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
+    marginHorizontal: 10,
   },
 });

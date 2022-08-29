@@ -1,15 +1,19 @@
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Platform, SafeAreaView, StyleSheet, Text, View, StatusBar, Image } from 'react-native';
-import Pokedex from './components/Pokedex';
+import HomeScreen from './screens/HomeScreen';
+import PokemonScreen from './screens/PokemonScreen';
+
+const Stack = createNativeStackNavigator()
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.title}>
-        <Text style={styles.title}>Pokedex</Text>
-        <Image style={styles.logo} source={{uri: "https://www.freepnglogos.com/uploads/pokemon-symbol-logo-png-31.png"}}/>
-      </View>
-      <Pokedex/>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Home" component={HomeScreen}/>
+        <Stack.Screen name='Pokemon' component={PokemonScreen}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -23,7 +27,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 40,
-    fontWeight:"500",
+    fontWeight:"bold",
     flexDirection: 'row',
     alignItems:'center',
     alignSelf: 'center'

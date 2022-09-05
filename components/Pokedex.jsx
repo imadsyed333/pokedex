@@ -18,7 +18,7 @@ export default function Pokedex(props) {
     const tempList = [];
 
     const pokedexResponse = await fetch(
-      "https://pokeapi.co/api/v2/pokemon?limit=100&offset=0"
+      "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0"
     );
     const pokedexJson = await pokedexResponse.json();
     const results = pokedexJson.results;
@@ -55,6 +55,7 @@ export default function Pokedex(props) {
         data={tempPokemon}
         renderItem={({ item }) => (
           <Pokemon
+            pokemon={item}
             name={item.name}
             sprite={item.sprites.front_default}
             art={item.sprites.other["official-artwork"].front_default}

@@ -8,8 +8,8 @@ const Pokemon = React.memo(function Pokemon(props) {
       onPress={() => {
         props.navigation.navigate("Pokemon", {
           name: props.name,
-          sprite: props.sprite,
           art: props.art,
+          pokemon: props.pokemon,
         });
       }}
     >
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   text: {
-    color: "white",
+    color: "#EFF8E2",
     margin: 10,
     fontSize: 20,
   },

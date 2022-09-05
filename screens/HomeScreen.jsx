@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, SafeAreaView, Text, Image, View } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  Image,
+  View,
+  StatusBar,
+} from "react-native";
 import Pokedex from "../components/Pokedex";
 
 export default function HomeScreen(props) {
